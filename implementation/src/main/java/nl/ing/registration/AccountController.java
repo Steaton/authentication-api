@@ -1,5 +1,6 @@
-package nl.ing.account;
+package nl.ing.registration;
 
+import nl.ing.account.Account;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

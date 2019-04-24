@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>nl.ing.authentication</artifactId>
-    <groupId>com.assessment.nl.ing.authentication</groupId>
+    <artifactId>authentication</artifactId>
+    <groupId>nl.ing.authentication</groupId>
     <packaging>pom</packaging>
     <version>1.0</version>
 
