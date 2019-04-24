@@ -4,12 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class LoginRequest {
 
     @JsonProperty
+    @NotEmpty
     private String username;
 
     @JsonProperty
+    @Size(min = 6)
     private String password;
 
     public LoginRequest() {
