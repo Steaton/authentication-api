@@ -3,7 +3,7 @@ package nl.ing.authentication;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import nl.ing.keystore.KeystoreService;
+import nl.ing.keystore.JwtKeystoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Date;
 public class LoginTokenService {
 
     @Autowired
-    private KeystoreService keystoreService;
+    private JwtKeystoreService jwtKeystoreService;
 
     public String createLoginToken(String id, long ttlMillis) {
         Key signingKey = generateSigningKey(SignatureAlgorithm.HS256);
@@ -32,8 +32,7 @@ public class LoginTokenService {
     }
 
     private Key generateSigningKey(SignatureAlgorithm signatureAlgorithm) {
-        byte[] apiKeySecretBytes = keystoreService.loadTokenGenerationKey().getEncoded();
+        byte[] apiKeySecretBytes = jwtKeystoreService.loadJwtTokenGenerationKey().getEncoded();
         return new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
     }
-
 }
