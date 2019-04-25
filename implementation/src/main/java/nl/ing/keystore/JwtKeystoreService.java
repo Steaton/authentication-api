@@ -50,7 +50,7 @@ public class JwtKeystoreService {
     }
 
     private KeyStore loadKeystoreData(char[] keyStorePassword, InputStream keyStoreData) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
-        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
         keyStore.load(keyStoreData, keyStorePassword);
         return keyStore;
     }

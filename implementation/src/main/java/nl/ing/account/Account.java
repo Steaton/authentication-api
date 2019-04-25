@@ -13,6 +13,9 @@ public class Account {
 
     private String accountNumber;
 
+    public Account() {
+    }
+
     public Account(String accountNumber, String username, String hashedPassword) {
         this.accountNumber = accountNumber;
         this.username = username;
