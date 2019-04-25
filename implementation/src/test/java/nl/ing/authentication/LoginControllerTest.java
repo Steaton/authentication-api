@@ -12,7 +12,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class LoginControllerTest {
@@ -35,10 +37,14 @@ public class LoginControllerTest {
 
     @Test
     public void should_login() throws Exception {
-        this.mockMvc.perform(post("/login")
+        when(loginService.login(anyString(), anyString())).thenReturn("JWTLoginToken");
+        String response = this.mockMvc.perform(post("/login")
                 .content(aLoginRequest())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andReturn().getResponse().getContentAsString();
+        assertEquals("{\"token\":\"JWTLoginToken\"}", response);
     }
 
     @Test

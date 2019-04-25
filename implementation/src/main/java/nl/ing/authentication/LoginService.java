@@ -14,9 +14,13 @@ public class LoginService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void login(String username, String password) {
+    @Autowired
+    private LoginTokenService loginTokenService;
+
+    public String login(String username, String password) {
         Account account = findAccount(username);
         validatePassword(password, account.getHashedPassword(), username);
+        return loginTokenService.createLoginToken(username, 3600000);
     }
 
     private Account findAccount(String username) {
