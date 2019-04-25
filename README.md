@@ -1,5 +1,24 @@
 # Authentication API
 
+### Configuration
+Use environment variasbles to specify the location of the keystore
+files, the keystore passwords and the database password. Kubernetes secrets
+can be used to inject these from the continuous integration pipeline. 
+
+
+The available configuration variables available are:
+
+    H2_PASSWORD
+    JWT_KEYSTORE_PASSWORD
+    JWT_KEYSTORE_PATH
+
+Note: Set the spring profile to local and change your `application.yml` local profile for
+convienience.
+    
+    spring.profiles.active=local
+    
+### Running the Application
+
 
 ### Design Notes
 - Uses Spring Boot 2
@@ -11,7 +30,9 @@
 - Exceptions use a rest architecture with the appropriate HttpStatus code
 - Passwords are encoded before being placed in the database
 - Input validation is done simply, only using JSR-303 annotations
-- No passwords or secrets should be hard-coded or checked into Git
+- No passwords or secrets should be hard-coded
+- A separarate keystore is used to hold the key for generating the JWT signature
+
 
 
 ToDo:
