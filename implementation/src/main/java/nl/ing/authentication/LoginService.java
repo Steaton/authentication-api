@@ -5,6 +5,7 @@ import nl.ing.account.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -18,9 +19,18 @@ public class LoginService {
     private LoginTokenService loginTokenService;
 
     public String login(String username, String password) {
+        checkNotNullOrEmpty(username, password);
         Account account = findAccount(username);
         validatePassword(password, account.getHashedPassword(), username);
         return loginTokenService.createLoginToken(username, 3600000);
+    }
+
+    private void checkNotNullOrEmpty(String username, String password) {
+        if (StringUtils.isEmpty(username)) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        } else if (StringUtils.isEmpty(password)) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
     }
 
     private Account findAccount(String username) {
