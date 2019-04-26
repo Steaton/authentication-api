@@ -19,6 +19,11 @@ convienience.
     
 ### Running the Application
 
+### API Documentation
+    https://localhost:8445/swagger-ui.html    
+
+### Health Endpoint
+    https://localhost:8445/actuator/health
 
 ### Design Notes
 - Uses Spring Boot 2
@@ -32,7 +37,7 @@ convienience.
 - Input validation is done simply, only using JSR-303 annotations
 - No passwords or secrets should be hard-coded
 - A separarate keystore is used to hold the key for generating the JWT signature
-
+- Added swagger2 with information about the possible error codes
 
 
 ToDo:
