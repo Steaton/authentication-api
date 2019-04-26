@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RestController
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private LoginService loginService;
@@ -32,9 +32,9 @@ public class LoginController {
     })
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
-        logger.info("Login request made by " + loginRequest.getUsername());
+        LOGGER.info("Login request made by {}", loginRequest.getUsername());
         String token = loginService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        logger.info("Login successful for " + loginRequest.getUsername());
+        LOGGER.info("Login successful for {}", loginRequest.getUsername());
         return new LoginResponse(token);
     }
 }

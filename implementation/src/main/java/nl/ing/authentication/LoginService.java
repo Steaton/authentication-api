@@ -2,6 +2,8 @@ package nl.ing.authentication;
 
 import nl.ing.account.Account;
 import nl.ing.account.AccountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class LoginService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginService.class);
 
     @Autowired
     private AccountRepository accountRepository;
@@ -37,6 +41,7 @@ public class LoginService {
     private Account findAccount(String username) {
         Optional<Account> account = accountRepository.findById(username);
         if (account.isPresent()) {
+            LOGGER.info("Account found for user {}", account.get().getUsername());
             return account.get();
         } else {
             throw new AccountDoesNotExistException("Login failed - account does not exist for " + username);
@@ -63,6 +68,7 @@ public class LoginService {
     }
 
     private void loginSuccessful(Account account) {
+        LOGGER.info("Password validated successfully for user {}", account.getUsername());
         if (account.getFailedLoginAttempts() > 0) {
             resetAccountFailedLogins(account);
         }

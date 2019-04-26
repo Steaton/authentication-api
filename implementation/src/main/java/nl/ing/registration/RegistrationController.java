@@ -15,27 +15,29 @@ import javax.validation.Valid;
 @RestController
 public class RegistrationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
     private AccountRegistrationService accountRegistrationService;
 
     @PostMapping(value = "/registerAccount", produces = MediaType.APPLICATION_JSON_VALUE)
     public void registerAccount(@RequestBody @Valid AccountRegistrationRequest registration) {
+        LOGGER.info("Attempting to register an account for {}", registration.getUsername());
         accountRegistrationService.registerAccount(registration.getAccountNumber(), registration.getUsername(), registration.getPassword());
+        LOGGER.info("User {} registered successfully");
     }
 
     /*
-        private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private LoginService loginService;
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
-        logger.info("Login request made by " + loginRequest.getUsername());
+        LOGGER.info("Login request made by " + loginRequest.getUsername());
         String token = loginService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        logger.info("Login successful for " + loginRequest.getUsername());
+        LOGGER.info("Login successful for " + loginRequest.getUsername());
         return new LoginResponse(token);
     }
      */
