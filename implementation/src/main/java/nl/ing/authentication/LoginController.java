@@ -32,9 +32,9 @@ public class LoginController {
     })
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
-        LOGGER.info("Login request made by {}", loginRequest.getUsername());
+        LOGGER.info("Login request made by: {}", loginRequest.getUsername());
         String token = loginService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        LOGGER.info("Login successful for {}", loginRequest.getUsername());
+        LOGGER.info("Login successful for: {}", loginRequest.getUsername());
         return new LoginResponse(token);
     }
 }

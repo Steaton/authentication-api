@@ -31,7 +31,7 @@ public class JwtKeystoreService {
         KeyStore keyStore = loadClientKeyStore();
         KeyStore.SecretKeyEntry tokenKeyEntry = getTokenKey(keyStore);
         if (tokenKeyEntry == null) {
-            throw new RuntimeException("There was a problem loading the client key from " + clientKeystorePath);
+            throw new RuntimeException("There was a problem loading the client key from: " + clientKeystorePath);
         }
         return tokenKeyEntry.getSecretKey();
     }
@@ -45,7 +45,7 @@ public class JwtKeystoreService {
         try (InputStream keyStoreData = new FileInputStream(clientKeystorePath)) {
             return loadKeystoreData(keyStorePassword, keyStoreData);
         } catch (Exception e) {
-            throw new RuntimeException("There was a problem loading the client key store from " + clientKeystorePath, e);
+            throw new RuntimeException("There was a problem loading the client key store from: " + clientKeystorePath, e);
         }
     }
 
@@ -60,7 +60,7 @@ public class JwtKeystoreService {
         try {
             tokenKeyEntry = (KeyStore.SecretKeyEntry) keyStore.getEntry(TOKEN_KEY, new KeyStore.PasswordProtection(clientKeystorePassword.toCharArray()));
         } catch (Exception e) {
-            throw new RuntimeException("There was a problem loading the client key from the key store " + TOKEN_KEY, e);
+            throw new RuntimeException("There was a problem loading the client key from the key store: " + TOKEN_KEY, e);
         }
         return tokenKeyEntry;
     }

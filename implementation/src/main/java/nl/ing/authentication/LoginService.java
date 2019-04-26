@@ -41,10 +41,10 @@ public class LoginService {
     private Account findAccount(String username) {
         Optional<Account> account = accountRepository.findById(username);
         if (account.isPresent()) {
-            LOGGER.info("Account found for user {}", account.get().getUsername());
+            LOGGER.info("Account found for: {}", account.get().getUsername());
             return account.get();
         } else {
-            throw new AccountDoesNotExistException("Login failed - account does not exist for " + username);
+            throw new AccountDoesNotExistException("Login failed - account does not exist for: " + username);
         }
     }
 
@@ -55,7 +55,7 @@ public class LoginService {
     }
 
     private void lockedAccountException(Account account) {
-        throw new AccountIsLockedException("Login failed - account is locked for " + account.getUsername());
+        throw new AccountIsLockedException("Login failed - account is locked for: " + account.getUsername());
     }
 
     private void validatePassword(String password, Account account) {
@@ -68,7 +68,7 @@ public class LoginService {
     }
 
     private void loginSuccessful(Account account) {
-        LOGGER.info("Password validated successfully for user {}", account.getUsername());
+        LOGGER.info("Password validated successfully for: {}", account.getUsername());
         if (account.getFailedLoginAttempts() > 0) {
             resetAccountFailedLogins(account);
         }
@@ -90,6 +90,6 @@ public class LoginService {
     }
 
     private void passwordIncorrectException(Account account) {
-        throw new PasswordIncorrectException("Login failed - password is incorrect for " + account.getUsername());
+        throw new PasswordIncorrectException("Login failed - password is incorrect for: " + account.getUsername());
     }
 }

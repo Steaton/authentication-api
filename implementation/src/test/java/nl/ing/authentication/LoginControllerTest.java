@@ -98,12 +98,12 @@ public class LoginControllerTest {
     }
 
     private void mockAccountDoesNotExist() {
-        AccountDoesNotExistException accountDoesNotExistException = new AccountDoesNotExistException("Login failed - account does not exist for user");
+        AccountDoesNotExistException accountDoesNotExistException = new AccountDoesNotExistException("Login failed - account does not exist for: user");
         doThrow(accountDoesNotExistException).when(loginService).login(anyString(), anyString());
     }
 
     private void mockPasswordIncorrect() {
-        PasswordIncorrectException passwordIncorrectException = new PasswordIncorrectException("Login failed - password is incorrect for user");
+        PasswordIncorrectException passwordIncorrectException = new PasswordIncorrectException("Login failed - password is incorrect for: user");
         doThrow(passwordIncorrectException).when(loginService).login(anyString(), anyString());
     }
 }

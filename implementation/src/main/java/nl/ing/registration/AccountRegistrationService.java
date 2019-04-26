@@ -12,10 +12,13 @@ public class AccountRegistrationService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AccountApiService accountApiService;
+
     public void registerAccount(String accountNumber, String username, String password) {
         // Validate Account Number
+        accountApiService.getAccountInformation("77853449");
         // Check Does Not Already Exist
-        // Hash password
         Account account = mapToAccount(accountNumber, username, password);
         accountRepository.save(account);
     }

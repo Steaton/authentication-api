@@ -16,7 +16,11 @@ server:
   ssl.key-store: ${CLIENT_KEYSTORE_PATH}
   ssl.key-store-password: ${CLIENT_KEYSTORE_PASSWORD}
   ssl.key-alias: 'client'
-
+http.client.ssl:
+  key-store: ${SERVER_KEYSTORE_PATH}
+  key-store-password: ${SERVER_KEYSTORE_PASSWORD}
+  trust-store: ${SERVER_TRUSTSTORE_PATH}
+  trust-store-password: ${SERVER_TRUSTSTORE_PASSWORD}
 keystore:
   client:
     password: ${JWT_KEYSTORE_PASSWORD}
@@ -26,12 +30,15 @@ spring:
   profiles: local
   datasource:
     password:
-
 keystore:
   client:
     password: 'changeit'
     path: 'implementation/src/main/resources/jwt-keystore.p12'
-
 server:
   ssl.key-store: 'client.jks'
   ssl.key-store-password: 'changeit'
+http.client.ssl:
+  key-store: 'conf/server-keystore.jks'
+  key-store-password: 'changeit'
+  trust-store: 'conf/server-truststore.jks'
+  trust-store-password: 'changeit'

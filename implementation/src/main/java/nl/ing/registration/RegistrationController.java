@@ -22,9 +22,9 @@ public class RegistrationController {
 
     @PostMapping(value = "/registerAccount", produces = MediaType.APPLICATION_JSON_VALUE)
     public void registerAccount(@RequestBody @Valid AccountRegistrationRequest registration) {
-        LOGGER.info("Attempting to register an account for {}", registration.getUsername());
+        LOGGER.info("Attempting to register an account for: {}", registration.getUsername());
         accountRegistrationService.registerAccount(registration.getAccountNumber(), registration.getUsername(), registration.getPassword());
-        LOGGER.info("User {} registered successfully");
+        LOGGER.info("Registration successful for: {}", registration.getUsername());
     }
 
     /*

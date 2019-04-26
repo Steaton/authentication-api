@@ -1,4 +1,4 @@
-package nl.ing;
+package nl.ing.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
