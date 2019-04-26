@@ -25,7 +25,7 @@ public class LoginController {
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully authenticated user"),
-            @ApiResponse(code = 401, message = "User credentials incorrect, login failed"),
+            @ApiResponse(code = 401, message = "User credentials incorrect or account locked, login failed"),
             @ApiResponse(code = 404, message = "Username specified is not found"),
             @ApiResponse(code = 400, message = "Request message is not valid"),
             @ApiResponse(code = 500, message = "Something technical went wrong")

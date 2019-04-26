@@ -21,7 +21,8 @@ public class LoginService {
     public String login(String username, String password) {
         checkNotNullOrEmpty(username, password);
         Account account = findAccount(username);
-        validatePassword(password, account.getHashedPassword(), username);
+        validateAccountNotLocked(account);
+        validatePassword(password, account);
         return loginTokenService.createLoginToken(username, 3600000);
     }
 
@@ -42,11 +43,47 @@ public class LoginService {
         }
     }
 
-    private void validatePassword(String password, String hashedPassword, String username) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        boolean matches = encoder.matches(password, hashedPassword);
-        if (!matches) {
-            throw new PasswordIncorrectException("Login failed - password is incorrect for " + username);
+    private void validateAccountNotLocked(Account account) {
+        if (account.isLocked()) {
+            lockedAccountException(account);
         }
+    }
+
+    private void lockedAccountException(Account account) {
+        throw new AccountIsLockedException("Login failed - account is locked for " + account.getUsername());
+    }
+
+    private void validatePassword(String password, Account account) {
+        boolean passwordIsCorrect = new BCryptPasswordEncoder().matches(password, account.getHashedPassword());
+        if (passwordIsCorrect) {
+            loginSuccessful(account);
+        } else {
+            loginFailed(account);
+        }
+    }
+
+    private void loginSuccessful(Account account) {
+        if (account.getFailedLoginAttempts() > 0) {
+            resetAccountFailedLogins(account);
+        }
+    }
+
+    private void resetAccountFailedLogins(Account account) {
+        account.unlock();
+        accountRepository.save(account);
+    }
+
+    private void loginFailed(Account account) {
+        updateFailedLoginCount(account);
+        passwordIncorrectException(account);
+    }
+
+    private void updateFailedLoginCount(Account account) {
+        account.incrementFailedLoginCount();
+        accountRepository.save(account);
+    }
+
+    private void passwordIncorrectException(Account account) {
+        throw new PasswordIncorrectException("Login failed - password is incorrect for " + account.getUsername());
     }
 }

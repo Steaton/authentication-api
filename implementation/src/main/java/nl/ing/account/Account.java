@@ -2,6 +2,7 @@ package nl.ing.account;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 public class Account {
@@ -12,6 +13,10 @@ public class Account {
     private String hashedPassword;
 
     private String accountNumber;
+
+    private int failedLoginAttempts;
+
+    private LocalDateTime lockedUntil;
 
     public Account() {
     }
@@ -44,5 +49,43 @@ public class Account {
 
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public LocalDateTime getLockedUntil() {
+        return lockedUntil;
+    }
+
+    public void setLockedUntil(LocalDateTime lockedUntil) {
+        this.lockedUntil = lockedUntil;
+    }
+
+    public void incrementFailedLoginCount() {
+        if (!isLocked() && failedLoginAttempts < 3) {
+            failedLoginAttempts++;
+            if (failedLoginAttempts == 3) {
+                lock();
+            }
+        }
+    }
+
+    public void lock() {
+        lockedUntil = LocalDateTime.now().plusDays(1);
+    }
+
+    public void unlock() {
+        failedLoginAttempts = 0;
+        lockedUntil = null;
+    }
+
+    public boolean isLocked() {
+        return lockedUntil != null && LocalDateTime.now().isBefore(lockedUntil);
     }
 }

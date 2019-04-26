@@ -11,6 +11,12 @@ The available configuration variables available are:
     H2_PASSWORD
     JWT_KEYSTORE_PASSWORD
     JWT_KEYSTORE_PATH
+    CLIENT_KEYSTORE_PATH
+    CLIENT_KEYSTORE_PASSWORD
+    SERVER_KEYSTORE_PATH
+    SERVER_KEYSTORE_PASSWORD
+    SERVER_TRUSTSTORE_PATH
+    SERVER_TRUSTSTORE_PASSWORD
 
 Note: Set the spring profile to local and change your `application.yml` local profile for
 convienience.
