@@ -24,7 +24,22 @@ convienience.
     spring.profiles.active=local
     
 ### Running the Application
+1. Setup environment variable to select local profile
+  
+        export spring.profiles.active=local
 
+2. Modify local profile in `application.yml` so that it points to the correct
+locations for the client, server and jwt truststores.
+
+3. Go into the implementation directory
+
+        cd implementation
+
+4. Run the application
+  
+        mvn spring-boot:run 
+ 
+ 
 ### API Documentation
     https://localhost:8445/swagger-ui.html    
 
@@ -45,9 +60,7 @@ convienience.
 - A separarate keystore is used to hold the key for generating the JWT signature
 - Added swagger2 with information about the possible error codes
 
-
 ToDo:
 - Exceptions to include only the code and message to avoid exposing call stack trace
-- Exception content type set to JSON
 - Health check to also check status of Account API and database
 
