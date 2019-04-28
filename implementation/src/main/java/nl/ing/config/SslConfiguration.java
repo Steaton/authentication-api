@@ -4,6 +4,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
@@ -20,6 +21,7 @@ import java.security.*;
 import java.security.cert.CertificateException;
 
 @Configuration
+@SuppressWarnings("deprecation")
 public class SslConfiguration {
 
     @Value("${http.client.ssl.key-store}")
@@ -41,15 +43,15 @@ public class SslConfiguration {
         return new RestTemplate(factory);
     }
 
-    private DefaultHttpClient instantiateHttpClient() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, KeyManagementException, UnrecoverableKeyException {
+    private CloseableHttpClient instantiateHttpClient() throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, KeyManagementException, UnrecoverableKeyException {
         KeyStore keystore = getKeyStore(keyStore, keyStorePassword);
         KeyStore truststore = getKeyStore(trustStore, triustStorePassword);
         return getHttpClient(keystore, truststore, keyStorePassword);
     }
 
-    private KeyStore getKeyStore(String keystorePath, String keystorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
+    private KeyStore getKeyStore(String resource, String keystorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         KeyStore keystore = KeyStore.getInstance("JKS");
-        InputStream keystoreInput = new FileInputStream(keystorePath);
+        InputStream keystoreInput = new FileInputStream(resource);
         keystore.load(keystoreInput, keystorePassword.toCharArray());
         return keystore;
     }
