@@ -88,4 +88,22 @@ public class Account {
     public boolean isLocked() {
         return lockedUntil != null && LocalDateTime.now().isBefore(lockedUntil);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account account = (Account) o;
+
+        if (!username.equals(account.username)) return false;
+        return accountNumber.equals(account.accountNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + accountNumber.hashCode();
+        return result;
+    }
 }

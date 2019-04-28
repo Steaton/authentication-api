@@ -48,5 +48,4 @@ public class AccountRegistrationService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
     }
-
 }

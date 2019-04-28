@@ -2,15 +2,22 @@ package nl.ing.registration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class AccountRegistrationRequest {
 
     @JsonProperty
+    @NotEmpty
     private String accountNumber;
 
     @JsonProperty
+    @NotEmpty
     private String username;
 
     @JsonProperty
+    @NotEmpty
+    @Size(min = 6)
     private String password;
 
     public AccountRegistrationRequest() {
