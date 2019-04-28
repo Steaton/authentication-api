@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountRegistrationService {
 
@@ -13,14 +15,28 @@ public class AccountRegistrationService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private AccountApiService accountApiService;
+    private AccountNumberValidationService accountNumberValidationService;
 
     public void registerAccount(String accountNumber, String username, String password) {
-        // Validate Account Number
-        accountApiService.getAccountInformation("77853449");
-        // Check Does Not Already Exist
+        validateAccountNumer(accountNumber, username);
+        validateUsernameAvailable(username);
         Account account = mapToAccount(accountNumber, username, password);
         accountRepository.save(account);
+    }
+
+
+    private void validateAccountNumer(String accountNumber, String username) {
+        boolean valid = accountNumberValidationService.validateAccountExists(accountNumber);
+        if (!valid) {
+            throw new AccountNumberNotFoundException("The account number was not found: " + accountNumber + " for user: " + username);
+        }
+    }
+
+    private void validateUsernameAvailable(String username) {
+        Optional<Account> account = accountRepository.findById(username);
+        if (account.isPresent()) {
+            throw new AccountAlreadyExistsException("An account already exists for: " + username);
+        }
     }
 
     private Account mapToAccount(String accountNumber, String username, String password) {
