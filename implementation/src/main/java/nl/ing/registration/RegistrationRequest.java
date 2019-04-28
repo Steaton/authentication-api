@@ -1,11 +1,13 @@
 package nl.ing.registration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-public class AccountRegistrationRequest {
+public class RegistrationRequest {
 
     @JsonProperty
     @NotEmpty
@@ -20,7 +22,13 @@ public class AccountRegistrationRequest {
     @Size(min = 6)
     private String password;
 
-    public AccountRegistrationRequest() {
+    public RegistrationRequest() {
+    }
+
+    public RegistrationRequest(@NotEmpty String accountNumber, @NotEmpty String username, @NotEmpty @Size(min = 6) String password) {
+        this.accountNumber = accountNumber;
+        this.username = username;
+        this.password = password;
     }
 
     public String getAccountNumber() {
@@ -45,5 +53,13 @@ public class AccountRegistrationRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String toJson() {
+        try {
+            return new ObjectMapper().writer().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return ""; // Should not happen
+        }
     }
 }

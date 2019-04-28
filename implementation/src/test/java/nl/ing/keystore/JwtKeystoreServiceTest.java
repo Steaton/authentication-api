@@ -42,7 +42,7 @@ public class JwtKeystoreServiceTest {
     public void should_error_when_keystore_not_found() {
         // Expect
         expectedEx.expect(RuntimeException.class);
-        expectedEx.expectMessage("There was a problem loading the client key store from nonexistentkeystore.p12");
+        expectedEx.expectMessage("There was a problem loading the client key store from: nonexistentkeystore.p12");
 
         // Given
         jwtKeystoreService = new JwtKeystoreService(CLIENT_KEYSTORE_PASSWORD, "nonexistentkeystore.p12");
@@ -55,7 +55,7 @@ public class JwtKeystoreServiceTest {
     public void should_error_when_key_not_found_in_keystore() throws IOException {
         // Expect
         expectedEx.expect(RuntimeException.class);
-        expectedEx.expectMessage("There was a problem loading the client key from C:\\Development\\authentication-api\\implementation\\target\\test-classes\\empty-keystore.p12");
+        expectedEx.expectMessage("There was a problem loading the client key from:");
 
         // Given
         String clientKeystorePath = new ClassPathResource("empty-keystore.p12").getFile().getAbsolutePath();

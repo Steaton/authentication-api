@@ -55,7 +55,7 @@ public class LoginControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andReturn().getResolvedException().getMessage();
-        assertEquals("Login failed - account does not exist for user", errorMessage);
+        assertEquals("Login failed - account does not exist for: user", errorMessage);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class LoginControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andReturn().getResolvedException().getMessage();
-        assertEquals("Login failed - password is incorrect for user", errorMessage);
+        assertEquals("Login failed - password is incorrect for: user", errorMessage);
     }
 
     @Test

@@ -50,7 +50,7 @@ public class LoginServiceTest {
     public void should_throw_exception_if_user_doesnt_exist() {
         // Expect
         expectedEx.expect(AccountDoesNotExistException.class);
-        expectedEx.expectMessage("Login failed - account does not exist for user");
+        expectedEx.expectMessage("Login failed - account does not exist for: user");
 
         // Given
         when(accountRepository.findById(anyString())).thenReturn(Optional.empty());
@@ -63,7 +63,7 @@ public class LoginServiceTest {
     public void should_throw_exception_if_password_incorrect() {
         // Expect
         expectedEx.expect(PasswordIncorrectException.class);
-        expectedEx.expectMessage("Login failed - password is incorrect for user");
+        expectedEx.expectMessage("Login failed - password is incorrect for: user");
 
         // Given
         when(accountRepository.findById(anyString())).thenReturn(Optional.of(anAccount(hash("incorrectPassword"))));
@@ -76,7 +76,7 @@ public class LoginServiceTest {
     public void should_throw_exception_if_account_locked() {
         // Expect
         expectedEx.expect(AccountIsLockedException.class);
-        expectedEx.expectMessage("Login failed - account is locked for user");
+        expectedEx.expectMessage("Login failed - account is locked for: user");
 
         // Given
         Account account = anAccount(hash("incorrectPassword"));

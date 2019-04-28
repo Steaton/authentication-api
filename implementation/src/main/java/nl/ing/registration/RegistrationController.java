@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,7 @@ public class RegistrationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
     @Autowired
-    private AccountRegistrationService accountRegistrationService;
+    private RegistrationService registrationService;
 
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully registered user"),
@@ -29,10 +28,10 @@ public class RegistrationController {
             @ApiResponse(code = 400, message = "Request message is not valid"),
             @ApiResponse(code = 500, message = "Something technical went wrong")
     })
-    @PostMapping(value = "/registerAccount", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void registerAccount(@RequestBody @Valid AccountRegistrationRequest registration) {
+    @PostMapping(value = "/registerAccount")
+    public void registerAccount(@RequestBody @Valid RegistrationRequest registration) {
         LOGGER.info("Attempting to register an account for: {}", registration.getUsername());
-        accountRegistrationService.registerAccount(registration.getAccountNumber(), registration.getUsername(), registration.getPassword());
+        registrationService.registerAccount(registration.getAccountNumber(), registration.getUsername(), registration.getPassword());
         LOGGER.info("Registration successful for: {}", registration.getUsername());
     }
 }

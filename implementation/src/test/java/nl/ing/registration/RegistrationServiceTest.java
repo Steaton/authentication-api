@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AccountRegistrationServiceTest {
+public class RegistrationServiceTest {
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
@@ -30,7 +30,7 @@ public class AccountRegistrationServiceTest {
     private AccountNumberValidationService accountNumberValidationService;
 
     @InjectMocks
-    private AccountRegistrationService accountRegistrationService;
+    private RegistrationService registrationService;
 
     @Test
     public void should_throw_exception_if_account_number_invalid() {
@@ -42,7 +42,7 @@ public class AccountRegistrationServiceTest {
         when(accountNumberValidationService.validateAccountExists("1234")).thenReturn(false);
 
         // When
-        accountRegistrationService.registerAccount("1234", "user", "password");
+        registrationService.registerAccount("1234", "user", "password");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class AccountRegistrationServiceTest {
         when(accountRepository.findById("user")).thenReturn(Optional.of(new Account()));
 
         // When
-        accountRegistrationService.registerAccount("1234", "user", "password");
+        registrationService.registerAccount("1234", "user", "password");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class AccountRegistrationServiceTest {
         when(accountRepository.findById("user")).thenReturn(Optional.empty());
 
         // When
-        accountRegistrationService.registerAccount("1234", "user", "password");
+        registrationService.registerAccount("1234", "user", "password");
 
         // Then
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
