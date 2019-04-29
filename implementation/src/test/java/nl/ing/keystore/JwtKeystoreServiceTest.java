@@ -28,7 +28,7 @@ public class JwtKeystoreServiceTest {
     @Test
     public void should_load_key_from_keystore() throws IOException {
         // Given
-        String clientKeystorePath = new ClassPathResource("jwt-keystore.p12").getFile().getAbsolutePath();
+        String clientKeystorePath = new ClassPathResource("local/jwt-keystore.p12").getFile().getAbsolutePath();
         jwtKeystoreService = new JwtKeystoreService(CLIENT_KEYSTORE_PASSWORD, clientKeystorePath);
 
         // When

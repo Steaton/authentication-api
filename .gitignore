@@ -4,7 +4,6 @@ implementation/target
 authentication.iml
 implementation/.DS_Store
 conf
-client.jks
 wiremock
 key_extract.sh
 start-wiremock.sh

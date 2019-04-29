@@ -15,7 +15,7 @@ public class InitialiseJwtKeyStoreTool {
 
     public static final void main(String args[]) {
         try {
-            File keystoreFile = new ClassPathResource("jwt-keystore.p12").getFile();
+            File keystoreFile = new ClassPathResource("local/jwt-keystore.p12").getFile();
             keystoreFile.delete();
         } catch (IOException e) {
             // Do nothing - continue
