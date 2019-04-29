@@ -59,8 +59,9 @@ locations for the client, server and jwt truststores.
 - No passwords or secrets should be hard-coded
 - A separarate keystore is used to hold the key for generating the JWT signature
 - Added swagger2 with information about the possible error codes
+- Overridden RestTemplate to use a thread safe HttpClient with the key and trust stores pre configured
 
 ToDo:
 - Exceptions to include only the code and message to avoid exposing call stack trace
 - Health check to also check status of Account API and database
-
+- Have used some deprecated stuff from HttpClient this should be updated
