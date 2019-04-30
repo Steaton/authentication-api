@@ -51,9 +51,10 @@ public class SslConfiguration {
 
     private KeyStore getKeyStore(String resource, String keystorePassword) throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         KeyStore keystore = KeyStore.getInstance("JKS");
-        InputStream keystoreInput = new FileInputStream(resource);
-        keystore.load(keystoreInput, keystorePassword.toCharArray());
-        return keystore;
+        try (InputStream keystoreInput = new FileInputStream(resource)) {
+            keystore.load(keystoreInput, keystorePassword.toCharArray());
+            return keystore;
+        }
     }
 
     private DefaultHttpClient getHttpClient(KeyStore keystore, KeyStore truststore, String keystorePassword) throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException {

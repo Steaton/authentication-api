@@ -26,7 +26,7 @@ public class LoginService {
         checkNotNullOrEmpty(username, password);
         Account account = findAccount(username);
         validateAccountNotLocked(account);
-        validatePassword(password, account);
+        updateFailedLoginAttempts(validatePassword(password, account.getHashedPassword()), account);
         return loginTokenService.createLoginToken(username, 3600000);
     }
 
@@ -58,8 +58,11 @@ public class LoginService {
         throw new AccountIsLockedException("Login failed - account is locked for: " + account.getUsername());
     }
 
-    private void validatePassword(String password, Account account) {
-        boolean passwordIsCorrect = new BCryptPasswordEncoder().matches(password, account.getHashedPassword());
+    private boolean validatePassword(String password, String hashedPassword) {
+        return new BCryptPasswordEncoder().matches(password, hashedPassword);
+    }
+
+    private void updateFailedLoginAttempts(boolean passwordIsCorrect, Account account) {
         if (passwordIsCorrect) {
             loginSuccessful(account);
         } else {

@@ -31,8 +31,9 @@ public class InitialiseJwtKeyStoreTool {
             keyGen.init(256);
             Key key = keyGen.generateKey();
             keyStore.setKeyEntry(TOKEN_KEY, key, keyStorePassword, null);
-            FileOutputStream outputStream = new FileOutputStream(clientKeystorePath);
-            keyStore.store(outputStream, keyStorePassword);
+            try (FileOutputStream outputStream = new FileOutputStream(clientKeystorePath)) {
+                keyStore.store(outputStream, keyStorePassword);
+            }
             System.out.println("Keystore Created at " + clientKeystorePath);
         } catch (Exception e) {
             e.printStackTrace();
